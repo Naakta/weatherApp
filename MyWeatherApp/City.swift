@@ -7,3 +7,9 @@
 //
 
 import Foundation
+
+class City {
+    let name = ""
+    let latitude = 0.0
+    let longitude = 0.0
+}

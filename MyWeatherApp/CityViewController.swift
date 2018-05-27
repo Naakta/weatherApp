@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class CityViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak var HomeTableView: UITableView!
     @IBOutlet weak var NewLocationButton: UIButton!
