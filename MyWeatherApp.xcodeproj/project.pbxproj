@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3F3F002120BB2FCB005D89AD /* AddCityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F3F002020BB2FCB005D89AD /* AddCityViewController.swift */; };
+		3F3F002320BB2FF1005D89AD /* WeatherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F3F002220BB2FF1005D89AD /* WeatherViewController.swift */; };
 		3F5457CA20BB1390002F5ACC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F5457C920BB1390002F5ACC /* AppDelegate.swift */; };
 		3F5457CC20BB1390002F5ACC /* CityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F5457CB20BB1390002F5ACC /* CityViewController.swift */; };
 		3F5457CF20BB1390002F5ACC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3F5457CD20BB1390002F5ACC /* Main.storyboard */; };
@@ -16,6 +18,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3F3F002020BB2FCB005D89AD /* AddCityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCityViewController.swift; sourceTree = "<group>"; };
+		3F3F002220BB2FF1005D89AD /* WeatherViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherViewController.swift; sourceTree = "<group>"; };
 		3F5457C620BB1390002F5ACC /* MyWeatherApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyWeatherApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3F5457C920BB1390002F5ACC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3F5457CB20BB1390002F5ACC /* CityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityViewController.swift; sourceTree = "<group>"; };
@@ -56,12 +60,14 @@
 		3F5457C820BB1390002F5ACC /* MyWeatherApp */ = {
 			isa = PBXGroup;
 			children = (
-				3F5457C920BB1390002F5ACC /* AppDelegate.swift */,
 				3F5457CB20BB1390002F5ACC /* CityViewController.swift */,
+				3F3F002020BB2FCB005D89AD /* AddCityViewController.swift */,
+				3F3F002220BB2FF1005D89AD /* WeatherViewController.swift */,
 				3F5457DB20BB2666002F5ACC /* City.swift */,
 				3F5457CD20BB1390002F5ACC /* Main.storyboard */,
 				3F5457D020BB1392002F5ACC /* Assets.xcassets */,
 				3F5457D220BB1392002F5ACC /* LaunchScreen.storyboard */,
+				3F5457C920BB1390002F5ACC /* AppDelegate.swift */,
 				3F5457D520BB1392002F5ACC /* Info.plist */,
 			);
 			path = MyWeatherApp;
@@ -139,8 +145,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				3F5457CC20BB1390002F5ACC /* CityViewController.swift in Sources */,
+				3F3F002320BB2FF1005D89AD /* WeatherViewController.swift in Sources */,
 				3F5457CA20BB1390002F5ACC /* AppDelegate.swift in Sources */,
 				3F5457DC20BB2666002F5ACC /* City.swift in Sources */,
+				3F3F002120BB2FCB005D89AD /* AddCityViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

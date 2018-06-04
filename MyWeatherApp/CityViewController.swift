@@ -8,14 +8,22 @@
 
 import UIKit
 
-class CityViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class CityViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, AddCityDelegate {
     
-    @IBOutlet weak var HomeTableView: UITableView!
-    @IBOutlet weak var NewLocationButton: UIButton!
+    @IBOutlet weak var homeTableView: UITableView!
+    @IBOutlet weak var newLocationButton: UIButton!
     
     var citiesArr = [City]()
     
+    // Delegate protocol
+    func userAddedNewCity(newCity: City) {
+        citiesArr.append(newCity)
+        dismiss(animated: true, completion: nil)
+        homeTableView.reloadData()
+//        navigationController?.popViewController(animated: true)
+    }
     
+    // tableView
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return citiesArr.count
     }
@@ -32,7 +40,16 @@ class CityViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let testCity = City(name: "Orlando", latitude: 9.0, longitude: 6.8)
+        citiesArr.append(testCity)
         // Do any additional setup after loading the view, typically from a nib.
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "NewCity" {
+            let controller = segue.destination as! AddCityViewController
+            controller.delegate = self
+        }
     }
 }
 

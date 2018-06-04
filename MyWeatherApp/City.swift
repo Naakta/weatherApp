@@ -8,8 +8,14 @@
 
 import Foundation
 
-class City {
-    let name = ""
-    let latitude = 0.0
-    let longitude = 0.0
+struct City {
+    var name = ""
+    var latitude = 0.0
+    var longitude = 0.0
+    
+    init(name: String, latitude: Double, longitude: Double) {
+        self.name = name
+        self.latitude = latitude
+        self.longitude = longitude
+    }
 }

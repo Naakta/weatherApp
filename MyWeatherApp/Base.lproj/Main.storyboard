@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Rkt-g2-4uL">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Rkt-g2-4uL">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -23,7 +23,7 @@
                                 <rect key="frame" x="140.5" y="602" width="94" height="30"/>
                                 <state key="normal" title="New Location"/>
                                 <connections>
-                                    <segue destination="pOH-Yg-M6n" kind="presentation" id="gCw-Tp-Teo"/>
+                                    <segue destination="pOH-Yg-M6n" kind="presentation" identifier="NewCity" id="gCw-Tp-Teo"/>
                                 </connections>
                             </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="90" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="tO3-NX-xkT">
@@ -71,6 +71,10 @@
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="F2L-Ay-S0W"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="MWB-kG-SAm"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -87,18 +91,18 @@
                     </view>
                     <navigationItem key="navigationItem" title="Cities" id="NEH-Ms-d9B"/>
                     <connections>
-                        <outlet property="HomeTableView" destination="tO3-NX-xkT" id="hNv-Wc-qAH"/>
-                        <outlet property="NewLocationButton" destination="0Ev-xO-0au" id="3yB-VR-AeS"/>
+                        <outlet property="homeTableView" destination="tO3-NX-xkT" id="hzh-Mg-Noo"/>
+                        <outlet property="newLocationButton" destination="0Ev-xO-0au" id="OQL-gE-hKM"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1076" y="132.68365817091455"/>
         </scene>
-        <!--View Controller-->
+        <!--Add City View Controller-->
         <scene sceneID="hQI-ld-Zmk">
             <objects>
-                <viewController id="pOH-Yg-M6n" sceneMemberID="viewController">
+                <viewController id="pOH-Yg-M6n" customClass="AddCityViewController" customModule="MyWeatherApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="FVy-mM-Qns">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -131,6 +135,9 @@
                                 <rect key="frame" x="127.5" y="187" width="120" height="36"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <state key="normal" title="Add New City"/>
+                                <connections>
+                                    <action selector="collectAndSend" destination="pOH-Yg-M6n" eventType="touchUpInside" id="fg2-Jd-Ac3"/>
+                                </connections>
                             </button>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dHo-Wt-fEJ">
                                 <rect key="frame" x="120" y="55" width="235" height="30"/>
@@ -167,18 +174,32 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="AdG-yk-vSn"/>
                     </view>
+                    <connections>
+                        <outlet property="cityNameTF" destination="dHo-Wt-fEJ" id="VUo-Hz-HSF"/>
+                        <outlet property="latitudeTF" destination="lZC-PK-Bni" id="uDT-nT-x9A"/>
+                        <outlet property="longitudeTF" destination="yYW-Hf-8P6" id="P9w-bC-3Ew"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6Kc-Ec-0s2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1076" y="850.52473763118451"/>
         </scene>
-        <!--View Controller-->
+        <!--Weather View Controller-->
         <scene sceneID="naD-3X-yAK">
             <objects>
-                <viewController id="3Au-7W-7an" sceneMemberID="viewController">
+                <viewController id="3Au-7W-7an" customClass="WeatherViewController" customModule="MyWeatherApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="eH5-SL-TtP">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iwv-cD-an9">
+                                <rect key="frame" x="51" y="122" width="42" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="4ma-OT-tKi"/>
                     </view>
