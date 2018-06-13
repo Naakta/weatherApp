@@ -7,41 +7,60 @@
 //
 
 import UIKit
+import CoreLocation
 
 class CityViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, AddCityDelegate {
-    
     @IBOutlet weak var homeTableView: UITableView!
     @IBOutlet weak var newLocationButton: UIButton!
     
-    var citiesArr = [City]()
+    var citiesArray = [City]()
     
     // Delegate protocol
     func userAddedNewCity(newCity: City) {
-        citiesArr.append(newCity)
+        citiesArray.append(newCity)
         dismiss(animated: true, completion: nil)
         homeTableView.reloadData()
-//        navigationController?.popViewController(animated: true)
+    }
+    
+    func userDidCancel() {
+        dismiss(animated: true, completion: nil)
     }
     
     // tableView
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return citiesArr.count
+        return citiesArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CityCell", for: indexPath)
-        let city = citiesArr[indexPath.row]
+        var city = citiesArray[indexPath.row]
         
-        let label = cell.viewWithTag(110) as! UILabel
+        var label = cell.viewWithTag(110) as! UILabel
         label.text = city.name
+        
+        if let cellCity = city.weather {
+            label = cell.viewWithTag(111) as! UILabel
+            label.text = "\(cellCity.currently?.temperature ?? 990.0)℉"
+        } else {
+            Weather.getWeatherData(for: CLLocationCoordinate2D(latitude: city.latitude, longitude: city.longitude)) {
+                weather in
+                if let conditionsData = weather {
+                    city.weather = conditionsData
+                    DispatchQueue.main.async {
+                        label = cell.viewWithTag(111) as! UILabel
+                        label.text = "\(city.weather?.currently?.temperature ?? 990.0)℉"
+                        label = cell.viewWithTag(112) as! UILabel
+                        label.text = city.weather?.currently?.icon
+                    }
+                }
+            }
+        }
         
         return cell
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let testCity = City(name: "Orlando", latitude: 9.0, longitude: 6.8)
-        citiesArr.append(testCity)
         // Do any additional setup after loading the view, typically from a nib.
     }
     
@@ -49,6 +68,12 @@ class CityViewController: UIViewController, UITableViewDataSource, UITableViewDe
         if segue.identifier == "NewCity" {
             let controller = segue.destination as! AddCityViewController
             controller.delegate = self
+        } else if segue.identifier == "CityData" {
+            let controller = segue.destination as! WeatherViewController
+            controller.delegate = self
+            if let indexPath = homeTableView.indexPath(for: sender as! UITableViewCell) {
+                controller.city = citiesArray[indexPath.row]
+            }
         }
     }
 }

@@ -7,14 +7,15 @@
 //
 
 import Foundation
+import CoreLocation
 
 struct City {
-    var name = ""
+    var name: String?
     var latitude = 0.0
     var longitude = 0.0
+    var weather: Weather?
     
-    init(name: String, latitude: Double, longitude: Double) {
-        self.name = name
+    init(latitude: Double, longitude: Double) {
         self.latitude = latitude
         self.longitude = longitude
     }
