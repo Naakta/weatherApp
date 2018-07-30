@@ -9,8 +9,10 @@
 import Foundation
 import CoreLocation
 
-struct City {
+class City {
     var name: String?
+    var state: String?
+    var country: String?
     var latitude = 0.0
     var longitude = 0.0
     var weather: Weather?

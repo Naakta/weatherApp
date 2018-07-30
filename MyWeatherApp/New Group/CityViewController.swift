@@ -9,11 +9,15 @@
 import UIKit
 import CoreLocation
 
-class CityViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, AddCityDelegate {
+class CityViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, AddCityDelegate, WeatherDataDelegate {
     @IBOutlet weak var homeTableView: UITableView!
     @IBOutlet weak var newLocationButton: UIButton!
     
     var citiesArray = [City]()
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
     
     // Delegate protocol
     func userAddedNewCity(newCity: City) {
@@ -31,9 +35,10 @@ class CityViewController: UIViewController, UITableViewDataSource, UITableViewDe
         return citiesArray.count
     }
     
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CityCell", for: indexPath)
-        var city = citiesArray[indexPath.row]
+        let city = citiesArray[indexPath.row]
         
         var label = cell.viewWithTag(110) as! UILabel
         label.text = city.name
@@ -50,7 +55,8 @@ class CityViewController: UIViewController, UITableViewDataSource, UITableViewDe
                         label = cell.viewWithTag(111) as! UILabel
                         label.text = "\(city.weather?.currently?.temperature ?? 990.0)℉"
                         label = cell.viewWithTag(112) as! UILabel
-                        label.text = city.weather?.currently?.icon
+                        // Extra debug label
+                        label.text = "\(city.weather?.daily?.data[0].temperatureHigh ?? 9090.0)"
                     }
                 }
             }
@@ -61,7 +67,6 @@ class CityViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

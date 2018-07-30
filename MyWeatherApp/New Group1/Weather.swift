@@ -13,7 +13,8 @@ import CoreLocation
 struct Weather: Codable {
     
     var currently: Currently?
-//    var hourly: Hourly?
+    var hourly: Hourly?
+    var daily: Daily?
     
     
     static let myAPIString = "https://api.darksky.net/forecast/\(myKey)/"
@@ -50,21 +51,33 @@ struct Currently: Codable {
     var icon: String?
 }
 
-//struct Hourly: Codable {
-//    var summary: String?
-//    var icon: String?
-//    var data: TempData?
-//
-//}
-//
-//struct Minutely: Codable {
-//    var summary: String?
-//}
-//
-//struct TempData: Codable {
-//    var temperature: Double?
-//    var summary: String?
-//    var icon: String?
-//}
+struct Hourly: Codable {
+    var summary: String?
+    var icon: String?
+    var data = [TempHourData?]()
+
+}
+
+struct Minutely: Codable {
+    var summary: String?
+}
+
+struct TempHourData: Codable {
+    var precipIntensity: Double?
+    var precipProbability: Double?
+}
+
+struct Daily: Codable {
+    var data = [TempDayData]()
+}
+
+struct TempDayData: Codable {
+    var sunriseTime: Int?
+    var sunsetTime: Int?
+    var temperatureHigh: Double?
+    var temperatureHighTime: Int?
+    var temperatureLow: Double?
+    var temperatureLowTime: Int?
+}
 
 

@@ -23,10 +23,28 @@ class AddCityViewController: UIViewController, UITextFieldDelegate {
     var delegate: CityViewController?
     lazy var geocoder = CLGeocoder()
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        segmentController.selectedSegmentIndex = 0
+        textField1.returnKeyType = UIReturnKeyType.next
+        textField1.becomeFirstResponder()
         // Do any additional setup after loading the view.
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField.returnKeyType == UIReturnKeyType.done && textField.text != "" {
+            collectAndSend()
+            return true
+        }
+        if textField.returnKeyType == UIReturnKeyType.next && textField.text != "" {
+            textField.resignFirstResponder()
+            textField2.becomeFirstResponder()
+        }
+        return false
     }
     
     override func didReceiveMemoryWarning() {
@@ -37,19 +55,37 @@ class AddCityViewController: UIViewController, UITextFieldDelegate {
     @IBAction func segmentIndexChanged(_ sender: AnyObject) {
         switch segmentController.selectedSegmentIndex {
         case 0:
-            textField2.isHidden = false;
-            textField1.placeholder = "City";
-            textField2.placeholder = "State";
+            textField1.returnKeyType = UIReturnKeyType.next
+            textField1.resignFirstResponder()
+            textField1.becomeFirstResponder()
+            textField1.text = ""
+            textField2.text = ""
+            textField2.isHidden = false
+            textField1.placeholder = "City"
+            textField2.placeholder = "State"
         case 1:
-            textField2.isHidden = true;
-            textField1.placeholder = "Zip Code";
+            textField1.returnKeyType = UIReturnKeyType.done
+            textField1.resignFirstResponder()
+            textField1.becomeFirstResponder()
+            textField1.text = ""
+            textField2.text = ""
+            textField2.isHidden = true
+            textField1.placeholder = "Zip Code"
         case 2:
+            
+            textField1.returnKeyType = UIReturnKeyType.next
+            textField1.resignFirstResponder()
+            textField1.becomeFirstResponder()
+            textField1.text = ""
+            textField2.text = ""
             textField2.isHidden = false;
-            textField1.placeholder = "Latitude";
-            textField2.placeholder = "Longitude";
+            textField1.placeholder = "Latitude"
+            textField2.placeholder = "Longitude"
         default:
-            textField1.isHidden = true;
-            textField2.isHidden = true;
+            textField1.text = ""
+            textField2.text = ""
+            textField1.isHidden = true
+            textField2.isHidden = true
         }
         
     }
@@ -72,8 +108,7 @@ class AddCityViewController: UIViewController, UITextFieldDelegate {
                     
                     if let location = location {
                         let coordinate = location.coordinate
-                        print("\(coordinate.latitude),\(coordinate.longitude)")
-                        var newCity = City(latitude: coordinate.latitude, longitude: coordinate.longitude)
+                        let newCity = City(latitude: coordinate.latitude, longitude: coordinate.longitude)
                         newCity.name = placemarks?.first?.locality
                         self.delegate?.userAddedNewCity(newCity: newCity)
                     }
@@ -96,8 +131,7 @@ class AddCityViewController: UIViewController, UITextFieldDelegate {
                     
                     if let location = location {
                         let coordinate = location.coordinate
-                        print("\(coordinate.latitude),\(coordinate.longitude)")
-                        var newCity = City(latitude: coordinate.latitude, longitude: coordinate.longitude)
+                        let newCity = City(latitude: coordinate.latitude, longitude: coordinate.longitude)
                         newCity.name = placemarks?.first?.locality
                         self.delegate?.userAddedNewCity(newCity: newCity)
                     }
@@ -108,7 +142,7 @@ class AddCityViewController: UIViewController, UITextFieldDelegate {
             let latStr = Double(textField1.text!)
             let lonStr = Double(textField2.text!)
             let coords = CLLocation(latitude: latStr!, longitude: lonStr!)
-            var myCity = City(latitude: latStr!, longitude: lonStr!)
+            let myCity = City(latitude: latStr!, longitude: lonStr!)
             
             geocoder.reverseGeocodeLocation(coords) {
                 (placemarks, error) in
