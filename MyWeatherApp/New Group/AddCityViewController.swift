@@ -32,7 +32,7 @@ class AddCityViewController: UIViewController, UITextFieldDelegate {
         segmentController.selectedSegmentIndex = 0
         textField1.returnKeyType = UIReturnKeyType.next
         textField1.becomeFirstResponder()
-        // Do any additional setup after loading the view.
+        
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -110,6 +110,7 @@ class AddCityViewController: UIViewController, UITextFieldDelegate {
                         let coordinate = location.coordinate
                         let newCity = City(latitude: coordinate.latitude, longitude: coordinate.longitude)
                         newCity.name = placemarks?.first?.locality
+                        newCity.state = placemarks?.first?.administrativeArea
                         self.delegate?.userAddedNewCity(newCity: newCity)
                     }
                 }
@@ -133,6 +134,7 @@ class AddCityViewController: UIViewController, UITextFieldDelegate {
                         let coordinate = location.coordinate
                         let newCity = City(latitude: coordinate.latitude, longitude: coordinate.longitude)
                         newCity.name = placemarks?.first?.locality
+                        newCity.state = placemarks?.first?.administrativeArea
                         self.delegate?.userAddedNewCity(newCity: newCity)
                     }
                 }
@@ -152,6 +154,7 @@ class AddCityViewController: UIViewController, UITextFieldDelegate {
                 } else {
                     if let placemarks = placemarks {
                         myCity.name = placemarks.first?.locality
+                        myCity.state = placemarks.first?.administrativeArea
                         self.delegate?.userAddedNewCity(newCity: myCity)
                     }
                 }

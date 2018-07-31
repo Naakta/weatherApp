@@ -45,7 +45,9 @@ class CityViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         if let cellCity = city.weather {
             label = cell.viewWithTag(111) as! UILabel
-            label.text = "\(cellCity.currently?.temperature ?? 990.0)℉"
+            label.text = "Currently \(cellCity.currently?.temperature ?? 990.0)℉"
+            label = cell.viewWithTag(112) as! UILabel
+            label.text = "High of \(city.weather?.daily?.data[0].temperatureHigh ?? 9090.0)℉"
         } else {
             Weather.getWeatherData(for: CLLocationCoordinate2D(latitude: city.latitude, longitude: city.longitude)) {
                 weather in
@@ -53,10 +55,9 @@ class CityViewController: UIViewController, UITableViewDataSource, UITableViewDe
                     city.weather = conditionsData
                     DispatchQueue.main.async {
                         label = cell.viewWithTag(111) as! UILabel
-                        label.text = "\(city.weather?.currently?.temperature ?? 990.0)℉"
+                        label.text = "Currently \(city.weather?.currently?.temperature ?? 9090.0)℉"
                         label = cell.viewWithTag(112) as! UILabel
-                        // Extra debug label
-                        label.text = "\(city.weather?.daily?.data[0].temperatureHigh ?? 9090.0)"
+                        label.text = "High of \(city.weather?.daily?.data[0].temperatureHigh ?? 9090.0)℉"
                     }
                 }
             }

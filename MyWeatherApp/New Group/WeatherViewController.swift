@@ -43,16 +43,15 @@ class WeatherViewController: UIViewController {
             print("city info received")
         }
         
-        // To-Do : finish city.state implemention
         cityLabel.text = "\(city.name ?? "Unknown"), \(city.state ?? "??")"
         currentlyLabel.text = "Currently \(city.weather?.currently?.temperature ?? 0.0)℉"
         feelsLikeLabel.text = "Feels like \(city.weather?.currently?.apparentTemperature ?? 0.0)℉"
-        minutelyDescriptionLabel.text = city.weather?.currently?.summary
+        minutelyDescriptionLabel.text = "Immediate forecast: " + (city.weather?.currently?.summary ?? "")
         
         // To-Do - todayDateLabel.text =
-        hourlyDescriptionLabel.text = city.weather?.hourly?.summary
-        lowTempLabel.text = "Low of \(city.weather?.daily?.data[0].temperatureLow ?? 0.0) at " + editTime(from: Double((city.weather?.daily?.data[0].temperatureLowTime)!))
-        highTempLabel.text = "High of \(city.weather?.daily?.data[0].temperatureHigh ?? 0.0) at " + editTime(from: Double((city.weather?.daily?.data[0].temperatureHighTime)!))
+        hourlyDescriptionLabel.text = "Today's forecast: " + (city.weather?.hourly?.summary ?? "")
+        lowTempLabel.text = "Low of \(city.weather?.daily?.data[0].temperatureLow ?? 0.0)℉ at " + editTime(from: Double((city.weather?.daily?.data[0].temperatureLowTime)!))
+        highTempLabel.text = "High of \(city.weather?.daily?.data[0].temperatureHigh ?? 0.0)℉ at " + editTime(from: Double((city.weather?.daily?.data[0].temperatureHighTime)!))
         sunriseLabel.text = "Sunrise at " + editTime(from: Double((city.weather?.daily?.data[0].sunriseTime)!))
         sunsetLabel.text = "Sunset at " + editTime(from: Double((city.weather?.daily?.data[0].sunsetTime)!))
     }
