@@ -27,6 +27,7 @@ class WeatherViewController: UIViewController {
     
     var delegate: CityViewController?
     var dateFormatter = DateFormatter()
+    var todayDateFormatter = DateFormatter()
     var city: City!
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -48,7 +49,8 @@ class WeatherViewController: UIViewController {
         feelsLikeLabel.text = "Feels like \(city.weather?.currently?.apparentTemperature ?? 0.0)℉"
         minutelyDescriptionLabel.text = "Immediate forecast: " + (city.weather?.currently?.summary ?? "")
         
-        // To-Do - todayDateLabel.text =
+        todayDateFormatter.dateStyle = .full
+        todayDateLabel.text = todayDateFormatter.string(from: Date())
         hourlyDescriptionLabel.text = "Today's forecast: " + (city.weather?.hourly?.summary ?? "")
         lowTempLabel.text = "Low of \(city.weather?.daily?.data[0].temperatureLow ?? 0.0)℉ at " + editTime(from: Double((city.weather?.daily?.data[0].temperatureLowTime)!))
         highTempLabel.text = "High of \(city.weather?.daily?.data[0].temperatureHigh ?? 0.0)℉ at " + editTime(from: Double((city.weather?.daily?.data[0].temperatureHighTime)!))

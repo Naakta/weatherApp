@@ -41,7 +41,7 @@ class CityViewController: UIViewController, UITableViewDataSource, UITableViewDe
         let city = citiesArray[indexPath.row]
         
         var label = cell.viewWithTag(110) as! UILabel
-        label.text = city.name
+        label.text = "\(city.name ?? ""), \(city.state ?? "")"
         
         if let cellCity = city.weather {
             label = cell.viewWithTag(111) as! UILabel
