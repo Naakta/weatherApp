@@ -48,6 +48,8 @@ class CityViewController: UIViewController, UITableViewDataSource, UITableViewDe
             label.text = "Currently \(cellCity.currently?.temperature ?? 990.0)℉"
             label = cell.viewWithTag(112) as! UILabel
             label.text = "High of \(city.weather?.daily?.data[0].temperatureHigh ?? 9090.0)℉"
+            let cellImage = cell.viewWithTag(113) as! UIImageView
+            cellImage.image = UIImage(named: city.weather?.currently?.icon ?? "default")
         } else {
             Weather.getWeatherData(for: CLLocationCoordinate2D(latitude: city.latitude, longitude: city.longitude)) {
                 weather in
@@ -58,6 +60,8 @@ class CityViewController: UIViewController, UITableViewDataSource, UITableViewDe
                         label.text = "Currently \(city.weather?.currently?.temperature ?? 9090.0)℉"
                         label = cell.viewWithTag(112) as! UILabel
                         label.text = "High of \(city.weather?.daily?.data[0].temperatureHigh ?? 9090.0)℉"
+                        let cellImage = cell.viewWithTag(113) as! UIImageView
+                        cellImage.image = UIImage(named: city.weather?.currently?.icon ?? "default")
                     }
                 }
             }

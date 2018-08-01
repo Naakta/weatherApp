@@ -24,6 +24,7 @@ class WeatherViewController: UIViewController {
     @IBOutlet weak var highTempLabel: UILabel!
     @IBOutlet weak var sunriseLabel: UILabel!
     @IBOutlet weak var sunsetLabel: UILabel!
+    @IBOutlet weak var currentImage: UIImageView!
     
     var delegate: CityViewController?
     var dateFormatter = DateFormatter()
@@ -48,6 +49,7 @@ class WeatherViewController: UIViewController {
         currentlyLabel.text = "Currently \(city.weather?.currently?.temperature ?? 0.0)℉"
         feelsLikeLabel.text = "Feels like \(city.weather?.currently?.apparentTemperature ?? 0.0)℉"
         minutelyDescriptionLabel.text = "Immediate forecast: " + (city.weather?.currently?.summary ?? "")
+        currentImage.image = UIImage(named: city.weather?.currently?.icon ?? "default")
         
         todayDateFormatter.dateStyle = .full
         todayDateLabel.text = todayDateFormatter.string(from: Date())
