@@ -32,7 +32,6 @@ class AddCityViewController: UIViewController, UITextFieldDelegate {
         segmentController.selectedSegmentIndex = 0
         textField1.returnKeyType = UIReturnKeyType.next
         textField1.becomeFirstResponder()
-        
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -86,7 +85,6 @@ class AddCityViewController: UIViewController, UITextFieldDelegate {
             textField1.isHidden = true
             textField2.isHidden = true
         }
-        
     }
     
     @IBAction func collectAndSend() {

@@ -21,7 +21,7 @@ class CityViewController: UIViewController, UITableViewDataSource, UITableViewDe
         return .lightContent
     }
     
-    // Delegate protocol
+    // Delegate protocols
     func userAddedNewCity(newCity: City) {
         citiesArray.append(newCity)
         dismiss(animated: true, completion: nil)
@@ -73,7 +73,6 @@ class CityViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 }
             }
         }
-        
         return cell
     }
     
@@ -85,12 +84,9 @@ class CityViewController: UIViewController, UITableViewDataSource, UITableViewDe
                     weather in
                     if let conditionsData = weather {
                         city.weather = conditionsData
-                        print("refresh 1")
                         DispatchQueue.main.async {
                             self.homeTableView.reloadData()
                             city.timestamp = Date()
-//                            self.testLabel.text = "\(city.timestamp)"
-                            print("refresh 2")
                         }
                     }
                 }
@@ -108,26 +104,6 @@ class CityViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 print("Decoding failed.")
             }
         }
-    
-        
-//        do {
-//            let data = try decoder.decode(City.self, from: firstCheck as! Data)
-//            citiesArray = [data]
-//            print("City Array found in UD")
-//        } catch {
-//            print("Error pulling data from User Defaults")
-//        }
-        
-//        if let data = try? Data(contentsOf: path) {
-//            let decoder = PropertyListDecoder()
-//            do {
-//                lists = try decoder.decode([Checklist].self, from: data)
-//                sortChecklist()
-//            } catch {
-//                print("Error decoding item array!")
-//                print("File Path is: \(dataFilePath())")
-//            }
-        
         super.viewDidLoad()
     }
     
