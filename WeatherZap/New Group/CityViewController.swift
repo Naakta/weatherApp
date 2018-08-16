@@ -11,7 +11,9 @@ import CoreLocation
 
 class CityViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, AddCityDelegate, WeatherDataDelegate {
     @IBOutlet weak var homeTableView: UITableView!
+    @IBOutlet weak var refreshButton: UIBarButtonItem!
     @IBOutlet weak var newLocationButton: UIButton!
+
     
     var citiesArray = [City]()
     
@@ -50,6 +52,8 @@ class CityViewController: UIViewController, UITableViewDataSource, UITableViewDe
             label.text = "High of \(city.weather?.daily?.data[0].temperatureHigh ?? 9090.0)℉"
             let cellImage = cell.viewWithTag(113) as! UIImageView
             cellImage.image = UIImage(named: city.weather?.currently?.icon ?? "default")
+            label = cell.viewWithTag(150) as! UILabel
+            label.text = "\(city.timestamp)"
         } else {
             Weather.getWeatherData(for: CLLocationCoordinate2D(latitude: city.latitude, longitude: city.longitude)) {
                 weather in
@@ -62,6 +66,9 @@ class CityViewController: UIViewController, UITableViewDataSource, UITableViewDe
                         label.text = "High of \(city.weather?.daily?.data[0].temperatureHigh ?? 9090.0)℉"
                         let cellImage = cell.viewWithTag(113) as! UIImageView
                         cellImage.image = UIImage(named: city.weather?.currently?.icon ?? "default")
+                        city.timestamp = Date()
+                        label = cell.viewWithTag(150) as! UILabel
+                        label.text = "\(city.timestamp)"
                     }
                 }
             }
@@ -70,9 +77,58 @@ class CityViewController: UIViewController, UITableViewDataSource, UITableViewDe
         return cell
     }
     
+    
+    @IBAction func refreshTable() {
+        for city in citiesArray {
+            if city.weather != nil {
+                Weather.getWeatherData(for: CLLocationCoordinate2D(latitude: city.latitude, longitude: city.longitude)) {
+                    weather in
+                    if let conditionsData = weather {
+                        city.weather = conditionsData
+                        print("refresh 1")
+                        DispatchQueue.main.async {
+                            self.homeTableView.reloadData()
+                            city.timestamp = Date()
+//                            self.testLabel.text = "\(city.timestamp)"
+                            print("refresh 2")
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
     override func viewDidLoad() {
-        super.viewDidLoad()
+        let defaults = UserDefaults.standard
+        if let data = defaults.data(forKey: "cityArray") {
+            let decoder = JSONDecoder()
+            do {
+                citiesArray = try decoder.decode([City].self, from: data)
+            } catch {
+                print("Decoding failed.")
+            }
+        }
+    
         
+//        do {
+//            let data = try decoder.decode(City.self, from: firstCheck as! Data)
+//            citiesArray = [data]
+//            print("City Array found in UD")
+//        } catch {
+//            print("Error pulling data from User Defaults")
+//        }
+        
+//        if let data = try? Data(contentsOf: path) {
+//            let decoder = PropertyListDecoder()
+//            do {
+//                lists = try decoder.decode([Checklist].self, from: data)
+//                sortChecklist()
+//            } catch {
+//                print("Error decoding item array!")
+//                print("File Path is: \(dataFilePath())")
+//            }
+        
+        super.viewDidLoad()
     }
     
     

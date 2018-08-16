@@ -68,11 +68,19 @@
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" tag="150" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g7r-dX-Gk3">
+                                                    <rect key="frame" x="54" y="63" width="27" height="12"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstItem="g7r-dX-Gk3" firstAttribute="leading" secondItem="YNf-DX-eKR" secondAttribute="trailing" constant="6" id="2Z1-dL-Zgi"/>
                                                 <constraint firstAttribute="trailing" secondItem="ZsB-df-05e" secondAttribute="trailing" constant="8" id="B71-bF-z5S"/>
                                                 <constraint firstItem="rwf-O8-B3B" firstAttribute="leading" secondItem="e9V-eW-FS5" secondAttribute="leadingMargin" constant="3" id="U8y-Zi-Vsk"/>
                                                 <constraint firstItem="0Eu-eK-DVI" firstAttribute="top" secondItem="rwf-O8-B3B" secondAttribute="bottom" id="VXj-X2-1tb"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="g7r-dX-Gk3" secondAttribute="bottom" constant="4" id="YJs-r8-Ad5"/>
                                                 <constraint firstItem="YNf-DX-eKR" firstAttribute="leading" secondItem="0Eu-eK-DVI" secondAttribute="leading" id="eaz-Un-bYI"/>
                                                 <constraint firstItem="rwf-O8-B3B" firstAttribute="top" secondItem="e9V-eW-FS5" secondAttribute="topMargin" constant="1" id="g3i-gg-OD8"/>
                                                 <constraint firstItem="YNf-DX-eKR" firstAttribute="top" secondItem="0Eu-eK-DVI" secondAttribute="bottom" id="rvk-qv-5tR"/>
@@ -104,10 +112,17 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Cities" id="NEH-Ms-d9B"/>
+                    <navigationItem key="navigationItem" title="Cities" id="NEH-Ms-d9B">
+                        <barButtonItem key="leftBarButtonItem" systemItem="refresh" id="Ac3-q1-pY4">
+                            <connections>
+                                <action selector="refreshTable" destination="BYZ-38-t0r" id="qFA-Qq-8nm"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="homeTableView" destination="tO3-NX-xkT" id="hzh-Mg-Noo"/>
                         <outlet property="newLocationButton" destination="0Ev-xO-0au" id="OQL-gE-hKM"/>
+                        <outlet property="refreshButton" destination="Ac3-q1-pY4" id="JgI-os-vTe"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -138,7 +153,7 @@
                                 <rect key="frame" x="75" y="133" width="225" height="30"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="yes" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no" textContentType="address-level2"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="yes" smartDashesType="no" smartInsertDeleteType="yes" smartQuotesType="no" textContentType="address-level2"/>
                                 <connections>
                                     <outlet property="delegate" destination="pOH-Yg-M6n" id="oGh-Rx-FBC"/>
                                 </connections>

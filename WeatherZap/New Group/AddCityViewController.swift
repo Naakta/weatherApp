@@ -72,7 +72,6 @@ class AddCityViewController: UIViewController, UITextFieldDelegate {
             textField2.isHidden = true
             textField1.placeholder = "Zip Code"
         case 2:
-            
             textField1.returnKeyType = UIReturnKeyType.next
             textField1.resignFirstResponder()
             textField1.becomeFirstResponder()

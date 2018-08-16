@@ -9,13 +9,14 @@
 import Foundation
 import CoreLocation
 
-class City {
+class City: Codable {
     var name: String?
     var state: String?
     var country: String?
     var latitude = 0.0
     var longitude = 0.0
     var weather: Weather?
+    var timestamp = Date()
     
     init(latitude: Double, longitude: Double) {
         self.latitude = latitude
