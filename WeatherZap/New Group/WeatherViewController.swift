@@ -25,6 +25,8 @@ class WeatherViewController: UIViewController {
     @IBOutlet weak var sunriseLabel: UILabel!
     @IBOutlet weak var sunsetLabel: UILabel!
     @IBOutlet weak var currentImage: UIImageView!
+    @IBOutlet weak var humidityLabel: UILabel!
+    @IBOutlet weak var rainChanceLabel: UILabel!
     
     var delegate: CityViewController?
     var dateFormatter = DateFormatter()
@@ -46,18 +48,42 @@ class WeatherViewController: UIViewController {
         }
         
         cityLabel.text = "\(city.name ?? "Unknown"), \(city.state ?? "??")"
-        currentlyLabel.text = "Currently \(city.weather?.currently?.temperature ?? 0.0)℉"
-        feelsLikeLabel.text = "Feels like \(city.weather?.currently?.apparentTemperature ?? 0.0)℉"
-        minutelyDescriptionLabel.text = "Immediate forecast: " + (city.weather?.currently?.summary ?? "")
+        currentlyLabel.text = "\(city.weather?.currently?.temperature ?? 0.0)℉"
+        feelsLikeLabel.text = "\(city.weather?.currently?.apparentTemperature ?? 0.0)℉"
+        minutelyDescriptionLabel.text = (city.weather?.currently?.summary ?? "")
         currentImage.image = UIImage(named: city.weather?.currently?.icon ?? "default")
         
         todayDateFormatter.dateStyle = .full
-        todayDateLabel.text = todayDateFormatter.string(from: Date())
-        hourlyDescriptionLabel.text = "Today's forecast: " + (city.weather?.hourly?.summary ?? "")
-        lowTempLabel.text = "Low of \(city.weather?.daily?.data[0].temperatureLow ?? 0.0)℉ at " + editTime(from: Double((city.weather?.daily?.data[0].temperatureLowTime)!))
-        highTempLabel.text = "High of \(city.weather?.daily?.data[0].temperatureHigh ?? 0.0)℉ at " + editTime(from: Double((city.weather?.daily?.data[0].temperatureHighTime)!))
-        sunriseLabel.text = "Sunrise at " + editTime(from: Double((city.weather?.daily?.data[0].sunriseTime)!))
-        sunsetLabel.text = "Sunset at " + editTime(from: Double((city.weather?.daily?.data[0].sunsetTime)!))
+        let dayFinder = todayDateFormatter.string(from: Date()).components(separatedBy: ",")
+        todayDateFormatter.dateStyle = .short
+        todayDateLabel.text = dayFinder[0] + ", " + todayDateFormatter.string(from: Date())
+        hourlyDescriptionLabel.text = (city.weather?.hourly?.summary ?? "")
+        
+        if let num = city.weather?.daily?.data[0].temperatureLowTime {
+            lowTempLabel.text = "\(city.weather?.daily?.data[0].temperatureLow ?? 0.0)℉ at " + editTime(from: Double(num))
+        }
+        
+        if let num = city.weather?.daily?.data[0].temperatureHighTime {
+            highTempLabel.text = "\(city.weather?.daily?.data[0].temperatureHigh ?? 0.0)℉ at " + editTime(from: Double(num))
+        }
+        
+        if let num = city.weather?.daily?.data[0].sunriseTime {
+            sunriseLabel.text = editTime(from: Double(num))
+        }
+        
+        if let num = city.weather?.daily?.data[0].sunsetTime {
+            sunsetLabel.text = editTime(from: Double(num))
+        }
+        
+        if let num = city.weather?.daily?.data[0].humidity {
+            humidityLabel.text = "\(num * 100)%"
+        }
+        
+        if let num = city.weather?.daily?.data[0].precipProbability {
+            rainChanceLabel.text = "\(num * 100)%"
+        }
+        
+        
     }
 
     override func didReceiveMemoryWarning() {

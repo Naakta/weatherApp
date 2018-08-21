@@ -78,6 +78,8 @@ struct TempDayData: Codable {
     var temperatureHighTime: Int?
     var temperatureLow: Double?
     var temperatureLowTime: Int?
+    var humidity: Double?
+    var precipProbability: Double?
 }
 
 

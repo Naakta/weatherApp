@@ -79,9 +79,11 @@ class CityViewController: UIViewController, UITableViewDataSource, UITableViewDe
     func tableView(_ tableView: UITableView,
                             commit editingStyle: UITableViewCellEditingStyle,
                             forRowAt indexPath: IndexPath) {
-        citiesArray.remove(at: indexPath.row)
-
-        tableView.deleteRows(at: [indexPath], with: .automatic)
+        
+        if editingStyle == .delete {
+            citiesArray.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+        }
     }
     
     @IBAction func refreshTable() {
