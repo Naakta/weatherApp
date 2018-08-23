@@ -37,6 +37,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        let navigationController = window!.rootViewController as! UINavigationController
+        let controller = navigationController.viewControllers[0] as! CityViewController
+        controller.refreshIfNeeded()
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
@@ -53,12 +56,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         do {
             let codedData = try encoder.encode(dataArray)
             defaults.set(codedData, forKey: "cityArray")
-//            print("This coded data: \(defaults.object(forKey: "cityArray") ?? 0)")
         } catch {
             print("Error encoding for save")
         }
     }
-
-
 }
 

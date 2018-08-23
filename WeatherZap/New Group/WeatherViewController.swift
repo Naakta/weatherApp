@@ -47,7 +47,7 @@ class WeatherViewController: UIViewController {
             print("city info received")
         }
         
-        cityLabel.text = "\(city.name ?? "Unknown"), \(city.state ?? "??")"
+        cityLabel.text = "\(city.name ?? "Unknown"), \(city.state ?? "")"
         currentlyLabel.text = "\(city.weather?.currently?.temperature ?? 0.0)℉"
         feelsLikeLabel.text = "\(city.weather?.currently?.apparentTemperature ?? 0.0)℉"
         minutelyDescriptionLabel.text = (city.weather?.currently?.summary ?? "")
@@ -82,8 +82,6 @@ class WeatherViewController: UIViewController {
         if let num = city.weather?.daily?.data[0].precipProbability {
             rainChanceLabel.text = "\(num * 100)%"
         }
-        
-        
     }
 
     override func didReceiveMemoryWarning() {

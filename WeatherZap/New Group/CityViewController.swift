@@ -86,6 +86,19 @@ class CityViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
     }
     
+    override func viewDidLoad() {
+        let defaults = UserDefaults.standard
+        if let data = defaults.data(forKey: "cityArray") {
+            let decoder = JSONDecoder()
+            do {
+                citiesArray = try decoder.decode([City].self, from: data)
+            } catch {
+                print("Decoding failed.")
+            }
+        }
+        super.viewDidLoad()
+    }
+    
     @IBAction func refreshTable() {
         for city in citiesArray {
             if city.weather != nil {
@@ -103,19 +116,45 @@ class CityViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
     }
     
-    override func viewDidLoad() {
-        let defaults = UserDefaults.standard
-        if let data = defaults.data(forKey: "cityArray") {
-            let decoder = JSONDecoder()
-            do {
-                citiesArray = try decoder.decode([City].self, from: data)
-            } catch {
-                print("Decoding failed.")
+    func refreshIfNeeded() {
+        let currentDate = Date()
+        print(currentDate)
+        if citiesArray[0].weather != nil {
+            let dateComp = compareDates(date1: citiesArray[0].timestamp, date2: currentDate)
+            if dateComp > 1800 {
+                refreshTable()
+            } else if dateComp == -1 {
+                print("Error occurred, date comparison was not valid.")
+            } else {
+                print("WeatherData is still current, no need to refresh.")
             }
         }
-        super.viewDidLoad()
     }
     
+    func compareDates(date1: Date, date2: Date) -> Int {
+        let calendar = Calendar.current
+        let date1Components = calendar.dateComponents([.day, .hour, .minute, .second], from: date1)
+        let date2Components = calendar.dateComponents([.day, .hour, .minute, .second], from: date2)
+        if let date1Day = date1Components.day,
+            let date2Day = date2Components.day,
+            date1Day < date2Day {
+            print("Second date is later")
+            return 1801
+        }
+        
+        guard let date1Hour = date1Components.hour,
+            let date1Min = date1Components.minute,
+            let date1Sec = date1Components.second,
+            let date2Hour = date2Components.hour,
+            let date2Min = date2Components.minute,
+            let date2Sec = date2Components.second else { return -1 }
+        
+        let date1Seconds = (date1Hour * 3600) + (date1Min * 60) + date1Sec
+        let date2Seconds = (date2Hour * 3600) + (date2Min * 60) + date2Sec
+        
+        print("Seconds between these dates = \(date2Seconds - date1Seconds)")
+        return date2Seconds - date1Seconds
+    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "NewCity" {

@@ -51,6 +51,10 @@ struct Currently: Codable {
     var icon: String?
 }
 
+struct Daily: Codable {
+    var data = [TempDayData]()
+}
+
 struct Hourly: Codable {
     var summary: String?
     var icon: String?
@@ -65,10 +69,6 @@ struct Minutely: Codable {
 struct TempHourData: Codable {
     var precipIntensity: Double?
     var precipProbability: Double?
-}
-
-struct Daily: Codable {
-    var data = [TempDayData]()
 }
 
 struct TempDayData: Codable {
